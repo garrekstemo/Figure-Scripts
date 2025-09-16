@@ -4,33 +4,6 @@ using CairoMakie
 include("functions.jl")
 GLMakie.activate!()
 
-function cavity_mode_energy(θs, E_0, n)
-    E_c = Float64[]
-    for θ_i in θs
-        E_ci = E_0 / sqrt(1 - sin(θ_i)^2 / n^2)
-        push!(E_c, E_ci)
-    end
-    return E_c
-end
-
-function polariton_branches(θs, E_v, E_0, n, Ω, branch = 1)
-    E = Float64[]
-    E_c = cavity_mode_energy(θs, E_0, n)
-
-    if branch == 1
-        for i in eachindex(θs)
-            E_i = 0.5 * (E_v + E_c[i] - sqrt(Ω^2 + (E_c[i] - E_v)^2)) 
-            push!(E, E_i)
-        end
-    elseif branch == 2
-        for i in eachindex(θs)
-            E_i = 0.5 * (E_v + E_c[i] + sqrt(Ω^2 + (E_c[i] - E_v)^2))
-            push!(E, E_i)
-        end
-    end
-    
-    return E
-end
 
 # Generate fake data here by setting n, E_v, E_0, and Ω,
 # which students must find by writing a fitting procedure.
